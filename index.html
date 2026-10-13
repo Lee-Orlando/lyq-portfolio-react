@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyq - 前端工程师个人站点</title>
+
+    <meta name="description" content="Lyq 的个人站点：记录前端学习、工程实践与独立项目探索，所有内容按「空间」组织，可自行增删文字与图片。">
+    <meta name="author" content="Lyq">
+    <meta name="keywords" content="前端开发,全栈工程师,Vue,React,Node.js,个人博客,作品集">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Lyq - 前端工程师个人站点">
+    <meta property="og:description" content="探索、创造、分享 —— 记录前端学习与工程实践的数字花园。">
+    <meta property="og:image" content="og-image.svg">
+    <meta name="twitter:card" content="summary">
+
+    <!-- 真实地址写在 public/site.config.js（已被 gitignore），下面只是兜底 -->
+    <meta name="contact-endpoint" content="">
+    <meta name="content-endpoint" content="">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' font-weight='700' fill='%23FFD700' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+</head>
+<body>
+    <!-- 这一版是 React 单页应用，内容由 JS 渲染。禁用 JS 时如实告知，而不是留一片空白 -->
+    <noscript>
+        <div style="padding:40px 20px;font-family:system-ui,sans-serif;color:#f5f5f5;background:#0a0a0a;min-height:100vh">
+            <h1 style="color:#FFD700">Lyq · 个人站点</h1>
+            <p>这是 <strong>React 18 + Vite</strong> 版本，页面内容需要 JavaScript 才能渲染。</p>
+            <p>请开启 JavaScript 后刷新；也可以看<a style="color:#FFD700" href="https://github.com/Lee-Orlando/lyq-portfolio">不依赖 JS 的原生版本</a>。</p>
+        </div>
+    </noscript>
+
+    <div id="app"></div>
+
+    <!-- 站点配置：含真实云函数地址，被 gitignore 排除，不进公开仓库。
+         文件不存在时页面照常工作，只是读不到云端内容，管理面板如实提示「只能看不能存」。 -->
+    <script src="/site.config.js"></script>
+    <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
