@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面没找到 - Lyq</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!--
+        这个页面刻意做成自包含：样式全部内联，不引 assets/ 下的 CSS。
+        原因：构建产物的 CSS 文件名带 hash，每次构建都变，写死链接会在下一次构建后失效；
+        而 404 页本来就是给「找不到资源」时看的，更不能再去依赖别的资源。
+
+        返回链接写成 ./ 而不是 /：同一份文件既可能部署在站点根目录（CloudBase），
+        也可能部署在子路径（GitHub Pages 的 /仓库名/）。./ 两种情况下都能正确回到首页。
+    -->
+    <style>
+        :root {
+            --gold: #FFD700;
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+                'Hiragino Sans GB', 'Microsoft YaHei', Roboto, Helvetica, Arial, sans-serif;
+            --font-serif: Georgia, 'Times New Roman', 'Songti SC', STSong, serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .notfound {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 24px;
+        }
+
+        .notfound code {
+            display: block;
+            font-family: var(--font-serif);
+            font-size: clamp(4rem, 16vw, 7rem);
+            line-height: 1;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+
+        .notfound h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .notfound p {
+            color: rgba(255, 255, 255, 0.68);
+            margin-bottom: 28px;
+        }
+
+        .notfound a {
+            display: inline-block;
+            padding: 12px 28px;
+            border: 1px solid var(--gold);
+            border-radius: 999px;
+            color: var(--gold);
+            text-decoration: none;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        .notfound a:hover,
+        .notfound a:focus-visible {
+            background: var(--gold);
+            color: var(--black);
+        }
+    </style>
+</head>
+<body>
+    <main class="notfound">
+        <div>
+            <code>404</code>
+            <h1>这个页面走丢了</h1>
+            <p>链接可能已经失效，或者被移动到别处了。</p>
+            <p><a href="./">回首页</a></p>
+        </div>
+    </main>
+</body>
+</html>
