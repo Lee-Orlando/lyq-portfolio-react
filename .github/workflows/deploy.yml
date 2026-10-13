@@ -1,0 +1,71 @@
+name: 部署到 GitHub Pages
+
+# 推到 main 就自动部署；也可以在 Actions 页面手动点「Run workflow」重跑
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Pages 部署需要这两项权限。默认只有 read，不写会报 403
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同时跑两次部署会互相覆盖，排队等前一个跑完
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 取出代码
+        uses: actions/checkout@v4
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: 安装依赖
+        # 用 ci 而不是 install：严格按 package-lock.json 装，避免本地能跑线上装出别的版本
+        run: npm ci
+
+      # site.config.js 含 CloudBase 环境 ID，不进仓库，构建时从仓库 Secrets 生成。
+      # 这样线上站点能连云端，而公开仓库里翻不到地址。
+      - name: 生成站点配置
+        run: |
+          cat > public/site.config.js <<'EOF'
+          (function (root) {
+              root.SITE_CONFIG = {
+                  contactEndpoint: '${{ secrets.CONTACT_ENDPOINT }}',
+                  contentEndpoint: '${{ secrets.CONTENT_ENDPOINT }}',
+                  siteUrl: 'https://lee-orlando.github.io/lyq-portfolio-react/'
+              };
+          })(typeof window !== 'undefined' ? window : globalThis);
+          EOF
+
+      - name: 构建
+        run: npm run build
+        env:
+          # Pages 的项目站点地址带仓库名，静态资源路径必须加这个前缀，否则 JS/CSS 全 404
+          BASE_PATH: /lyq-portfolio-react/
+
+      - name: 打包产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 发布
+        id: deployment
+        uses: actions/deploy-pages@v4
